@@ -28,7 +28,7 @@ void DrawingState::update(Machine &machine)
   }
 
   _setTarget(machine);
-  int progress = ((_segment + 1) * 100) / count;
+  int progress = (_segment * 100) / count;
   machine._display.drawProgressBar(progress);
   return;
 }
