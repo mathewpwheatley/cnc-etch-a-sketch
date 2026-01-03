@@ -54,13 +54,12 @@ long Steppers::_applyBacklash(long absoluteTarget, Axis axis)
 {
   AxisState &a = _axes[static_cast<int>(axis)];
   bool movePositive = (absoluteTarget >= a.position);
-  if (movePositive != a.lastMovePositive)
+  if (absoluteTarget == a.position || movePositive == a.lastMovePositive)
   {
-    a.lastMovePositive = movePositive;
-    return movePositive ? (absoluteTarget + _backlash) : (absoluteTarget - _backlash);
+    return absoluteTarget;
   }
-
-  return absoluteTarget;
+  a.lastMovePositive = movePositive;
+  return movePositive ? (absoluteTarget + _backlash) : (absoluteTarget - _backlash);
 }
 
 void Steppers::resume()
